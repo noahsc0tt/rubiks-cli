@@ -11,6 +11,7 @@ module Timer
 
     STDIN.raw do
       loop do
+        print "\r#{(Time.now - start).round(1)}"
         break if STDIN.wait_readable(0.01)
       end
       STDIN.read_nonblock(1) rescue nil
