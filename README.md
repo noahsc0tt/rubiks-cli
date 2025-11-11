@@ -15,5 +15,6 @@ rubiks
 ```
 
 - Press Enter to start timing
+- Press any key to stop timing
 - Type 'n' for a new scramble  
 - Type 'q' to quit
