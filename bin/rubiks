@@ -2,7 +2,7 @@
 
 require 'rubiks_cli'
 
-HELP = "Press Enter to start\nType 'q' to quit\nType 'n' for a new scramble"
+HELP = "Press Enter to start timing\nPress any key to stop timing\nType 'q' to quit\nType 'n' for a new scramble"
 
 cmd = 'n'
 
