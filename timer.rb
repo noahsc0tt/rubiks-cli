@@ -1,6 +1,11 @@
 require 'io/console'
 
 module Timer
+
+  def self.clear_screen
+    system("clear") || system("cls")
+  end
+
   def self.time
     start = Time.now
 
@@ -13,8 +18,15 @@ module Timer
 
     return Time.now - start
   end
+
+  def self.start
+    clear_screen
+    time = Timer.time
+    clear_screen
+    puts time.round(3)
+  end
 end
 
 if __FILE__ == $0
-  puts Timer.time
+  Timer.start
 end
