@@ -25,18 +25,19 @@ module RubiksCli
 
     def self.inspection
       STDIN.raw do
-        (0..INSPECTION_TIME-1).each do |i|
+        (0...INSPECTION_TIME).each do |i|
           print "\r#{i}"
           return if STDIN.wait_readable(1)
         end
+
         print "\r+2"
         2.times do
           return if STDIN.wait_readable(1)
         end
+        
         print "\rDNF"
-        STDIN.getch
       ensure
-        STDIN.read_nonblock(1) rescue nil
+        STDIN.getch rescue nil
       end
     end
   end
