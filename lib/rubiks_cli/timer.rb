@@ -24,20 +24,16 @@ module RubiksCli
 
     def self.inspection
       STDIN.raw do
-        start = Time.now
-        while (i = (Time.now - start).floor()) < 5
+        (0..14).each do |i|
           print "\r#{i}"
-          sleep(0.01)
-          return if STDIN.wait_readable(0.01)
+          return if STDIN.wait_readable(1)
         end
         print "\r+2"
-        start = Time.now
-        while (Time.now - start) < 2
-          return if STDIN.wait_readable(0.01)
+        2.times do
+          return if STDIN.wait_readable(1)
         end
         print "\rDNF"
-
-        STDIN.read(1) rescue nil
+        STDIN.getch
       ensure
         STDIN.read_nonblock(1) rescue nil
       end
