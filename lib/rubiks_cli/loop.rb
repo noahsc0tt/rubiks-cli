@@ -5,12 +5,12 @@ require_relative 'scrambler'
 
 module RubiksCli
   class Loop
-    def self.solve
+    def self.solve(clear_screen: true)
       Help.loop
       loop do
         begin
           input = gets.chomp
-          Clear.line_above
+          clear_screen ? Clear.screen : Clear.line_above
           self.process_input(input)
         rescue SystemExit
           exit
