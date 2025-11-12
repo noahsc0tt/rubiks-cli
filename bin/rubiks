@@ -46,8 +46,7 @@ if options[:scramble] && options[:time]
 elsif options[:scramble]
   puts RubiksCli::Scrambler.get_scramble
 elsif options[:time]
-  RubiksCli::Timer.inspection if options[:inspection]
-  RubiksCli::Timer.time
+  RubiksCli::Timer.start(options[:inspection])
 else
   RubiksCli::Clear.screen
   RubiksCli::Solve.loop(options[:wipe], options[:inspection])

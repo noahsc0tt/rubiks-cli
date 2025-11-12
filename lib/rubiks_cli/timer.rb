@@ -6,7 +6,10 @@ module RubiksCli
     INSPECTION_TIME = 15
 
     def self.start(inspection)
-      self.inspection if inspection
+      if inspection
+        self.inspection
+      end
+      Clear.current_line
       puts "\r#{self.time.round(3)}"
     end
 
@@ -27,7 +30,7 @@ module RubiksCli
     def self.inspection
       STDIN.raw do
         (0...INSPECTION_TIME).each do |i|
-          print "\r#{i}"
+          print "\rInspection: #{i}"
           return if STDIN.wait_readable(1)
         end
 
