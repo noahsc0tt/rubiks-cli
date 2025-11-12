@@ -1,10 +1,10 @@
 require 'io/console'
+require_relative 'clear'
 
 module RubiksCli
   class Timer
-
-    def self.clear_screen
-      system("clear") || system("cls")
+    def self.show
+      puts "\r#{self.time.round(3)}"
     end
 
     def self.time
@@ -19,13 +19,6 @@ module RubiksCli
       end
 
       return Time.now - start
-    end
-
-    def self.start
-      clear_screen
-      time = Timer.time
-      clear_screen
-      puts time.round(3)
     end
   end
 end
