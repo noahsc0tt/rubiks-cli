@@ -3,11 +3,12 @@ require_relative 'clear'
 
 module RubiksCli
   class Timer
+    INSPECTION_TIME = 5
+
     def self.show
       puts "\r#{self.time.round(3)}"
     end
 
-    
     def self.time
       start = Time.now
 
@@ -24,7 +25,7 @@ module RubiksCli
 
     def self.inspection
       STDIN.raw do
-        (0..14).each do |i|
+        (0..INSPECTION_TIME-1).each do |i|
           print "\r#{i}"
           return if STDIN.wait_readable(1)
         end
