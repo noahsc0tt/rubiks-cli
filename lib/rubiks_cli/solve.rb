@@ -12,7 +12,7 @@ module RubiksCli
         Timer.show
     end
 
-    def self.loop(clear_screen: false)
+    def self.loop(clear_screen)
       Help.loop
       Kernel.loop do
         begin
@@ -30,6 +30,8 @@ module RubiksCli
       case cmd.downcase
       when 'n'
         puts Scrambler.get_scramble
+      when 'c'
+        Clear.screen
       when 'h', '?'
         Help.loop
       when 'q'
