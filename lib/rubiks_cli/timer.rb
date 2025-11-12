@@ -3,9 +3,10 @@ require_relative 'clear'
 
 module RubiksCli
   class Timer
-    INSPECTION_TIME = 5
+    INSPECTION_TIME = 15
 
-    def self.show
+    def self.start(inspection)
+      self.inspection if inspection
       puts "\r#{self.time.round(3)}"
     end
 
@@ -44,6 +45,5 @@ module RubiksCli
 end
 
 if __FILE__ == $0
-  RubiksCli::Timer.inspection
-  RubiksCli::Timer.show
+  RubiksCli::Timer.start(true)
 end
