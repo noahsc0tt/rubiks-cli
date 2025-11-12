@@ -2,23 +2,23 @@
 
 require 'rubiks_cli'
 
-HELP = "Press Enter to start timing\nPress any key to stop timing\nType 'q' to quit\nType 'n' for a new scramble"
+HELP = "Press Enter to start timing\nPress any key to stop timing\nType 'q' to quit\nType 'n' for a new scramble\nType 'h' or '?' for this message"
 
 cmd = 'n'
 
 while true
   RubiksCli::Timer.clear_screen
-  if cmd == ''
-    RubiksCli::Timer.start
-    cmd = 'n'
-  end
 
-  if cmd == 'n'
+  case cmd.downcase
+  when 'n'
     puts RubiksCli::Scrambler.get_scramble
-  elsif cmd.downcase == 'q'
+  when 'q'
     break
-  else
+  when 'h', '?'
     puts HELP
+  else
+    RubiksCli::Timer.start
+    puts RubiksCli::Scrambler.get_scramble
   end
 
   cmd = gets.chomp
