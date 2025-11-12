@@ -9,8 +9,9 @@ module RubiksCli
       Help.loop
       loop do
         begin
-          self.process_input(gets.chomp)
-          print "\n"
+          input = gets.chomp
+          Clear.line_above
+          self.process_input(input)
         rescue SystemExit
           exit
         end
@@ -28,7 +29,7 @@ module RubiksCli
         raise SystemExit
       else
         Timer.show
-        puts Scrambler.get_scramble
+        puts "\n#{Scrambler.get_scramble}"
       end
     end
   end
