@@ -6,7 +6,6 @@ options = {
   scramble: false,
   time: false,
   loop: true,
-  solve: false,
   clear: false,
   wipe: false,
 }
@@ -21,19 +20,15 @@ OptionParser.new do |opts|
     options[:time] = true
   end
 
-  opts.on("-l", "--loop", "Loop forever") do
+  opts.on("-l", "--loop", "Loop forever (default)") do
     options[:loop] = true
-  end
-
-  opts.on("-o", "--solve", "Start solve") do
-    options[:solve] = true
   end
 
   opts.on("-w", "--wipe", "Wipe output each loop iteration") do
     options[:wipe] = true
   end
 
-  opts.on("-c", "--clear", "Clear the screen before starting") do
+  opts.on("-c", "--clear", "Clear the screen before starting (default for --loop)") do
     options[:clear] = true
   end
 end.parse!
@@ -42,12 +37,12 @@ if options[:clear]
   RubiksCli::Clear.screen
 end
 
-if options[:scramble]
+if options[:scramble] && options[:time]
+  RubiksCli::Solve.solve
+elsif options[:scramble]
   puts RubiksCli::Scrambler.get_scramble
 elsif options[:time]
   RubiksCli::Timer.time
-elsif options[:solve]
-  RubiksCli::Solve.solve
 else
   RubiksCli::Clear.screen
   RubiksCli::Solve.loop(options[:wipe])
