@@ -2,9 +2,16 @@
 require 'optparse'
 require 'rubiks_cli'
 
-options = {}
+options = {
+  scramble: false,
+  time: false,
+  loop: true,
+  solve: false,
+  clear: false,
+  wipe: false,
+}
 OptionParser.new do |opts|
-  opts.banner = "Usage: mytool [options]"
+  opts.banner = "Usage: rubiks [options]"
 
   opts.on("-s", "--scramble", "Generate scramble") do
     options[:scramble] = true
@@ -14,25 +21,34 @@ OptionParser.new do |opts|
     options[:time] = true
   end
 
+  opts.on("-l", "--loop", "Loop forever") do
+    options[:loop] = true
+  end
+
   opts.on("-o", "--solve", "Start solve") do
     options[:solve] = true
   end
 
-  opts.on("-k", "--keep", "Keep output on screen") do
-    options[:keep] = true
+  opts.on("-w", "--wipe", "Wipe output each loop iteration") do
+    options[:wipe] = true
+  end
+
+  opts.on("-c", "--clear", "Clear the screen before starting") do
+    options[:clear] = true
   end
 end.parse!
 
-if !options[:keep]
+if options[:clear]
   RubiksCli::Clear.screen
 end
 
 if options[:scramble]
   puts RubiksCli::Scrambler.get_scramble
 elsif options[:time]
-  RubiksCli::Timer.start
+  RubiksCli::Timer.time
 elsif options[:solve]
   RubiksCli::Solve.solve
 else
-  RubiksCli::Solve.loop(clear_screen: !options[:keep])
+  RubiksCli::Clear.screen
+  RubiksCli::Solve.loop(options[:wipe])
 end
