@@ -24,6 +24,7 @@ module RubiksCli
       moves.join(", ")
     end
 
+    private
     def self.get_move
       FACES.sample + SUFFIXES.sample
     end

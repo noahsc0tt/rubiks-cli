@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["noah.scott.24@ucl.ac.uk"]
   
   spec.summary       = "A command-line Rubik's Cube timer"
-  spec.description   = "A simple CLI tool for timing Rubik's Cube solves"
+  spec.description   = "A CLI tool for generating scrambles and timing Rubik's Cube solves"
   spec.homepage      = "https://github.com/noahsc0tt/rubiks-cli"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.7.0"

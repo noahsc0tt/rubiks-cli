@@ -1,25 +1,38 @@
 #!/usr/bin/env ruby
-
+require 'optparse'
 require 'rubiks_cli'
 
-HELP = "Press Enter to start timing\nPress any key to stop timing\nType 'q' to quit\nType 'n' for a new scramble\nType 'h' or '?' for this message"
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: mytool [options]"
 
-cmd = 'n'
-
-while true
-  RubiksCli::Timer.clear_screen
-
-  case cmd.downcase
-  when 'n'
-    puts RubiksCli::Scrambler.get_scramble
-  when 'q'
-    break
-  when 'h', '?'
-    puts HELP
-  else
-    RubiksCli::Timer.start
-    puts RubiksCli::Scrambler.get_scramble
+  opts.on("-s", "--scramble", "Generate scramble") do
+    options[:scramble] = true
   end
 
-  cmd = gets.chomp
+  opts.on("-t", "--time", "Start timer") do
+    options[:time] = true
+  end
+
+  opts.on("-o", "--solve", "Start solve") do
+    options[:solve] = true
+  end
+
+  opts.on("-k", "--keep", "Keep output on screen") do
+    options[:keep] = true
+  end
+end.parse!
+
+if !options[:keep]
+  RubiksCli::Clear.screen
+end
+
+if options[:scramble]
+  puts RubiksCli::Scrambler.get_scramble
+elsif options[:time]
+  RubiksCli::Timer.start
+elsif options[:solve]
+  RubiksCli::Solve.solve
+else
+  RubiksCli::Solve.loop(clear_screen: !options[:keep])
 end

@@ -4,14 +4,21 @@ require_relative 'timer'
 require_relative 'scrambler' 
 
 module RubiksCli
-  class Loop
-    def self.solve(clear_screen: true)
+  class Solve
+    def self.solve
+        puts Scrambler.get_scramble
+        gets
+        Clear.line_above
+        Timer.show
+    end
+
+    def self.loop(clear_screen: false)
       Help.loop
-      loop do
+      Kernel.loop do
         begin
           input = gets.chomp
           clear_screen ? Clear.screen : Clear.line_above
-          self.process_input(input)
+          process_input(input)
         rescue SystemExit
           exit
         end
@@ -36,5 +43,5 @@ module RubiksCli
 end
 
 if __FILE__ == $0
-  RubiksCli::Loop.solve
+  RubiksCli::Solve.solve
 end
