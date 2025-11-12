@@ -18,3 +18,4 @@ rubiks
 - Press any key to stop timing
 - Type 'n' for a new scramble  
 - Type 'q' to quit
+- Type 'h' or '?' for help (this message)
