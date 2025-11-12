@@ -14,13 +14,13 @@ module RubiksCli
 
       STDIN.raw do
         loop do
-          print "\r#{(Time.now - start).round(1)}"
-          break if STDIN.wait_readable(0.01)
+          elapsed = Time.now - start
+          print "\r#{elapsed.round(1)}"
+          return elapsed if STDIN.wait_readable(0.1)
         end
-        STDIN.read_nonblock(1) rescue nil
+      ensure
+        STDIN.getch rescue nil
       end
-
-      return Time.now - start
     end
 
     def self.inspection
@@ -45,4 +45,5 @@ end
 
 if __FILE__ == $0
   RubiksCli::Timer.inspection
+  RubiksCli::Timer.show
 end
