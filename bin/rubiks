@@ -3,14 +3,27 @@ require 'optparse'
 require 'rubiks_cli'
 
 options = {
+  clear: false,
+  inspection: false,
+  loop: true,
   scramble: false,
   time: false,
-  loop: true,
-  clear: false,
   wipe: false,
 }
 OptionParser.new do |opts|
   opts.banner = "Usage: rubiks [options]"
+
+  opts.on("-c", "--clear", "Clear the screen before starting") do
+    options[:clear] = true
+  end
+
+  opts.on("-i", "--inspection", "Include inspection time") do
+    options[:inspection] = true
+  end
+
+  opts.on("-l", "--loop", "Loop forever") do
+    options[:loop] = true
+  end
 
   opts.on("-s", "--scramble", "Generate scramble") do
     options[:scramble] = true
@@ -20,30 +33,22 @@ OptionParser.new do |opts|
     options[:time] = true
   end
 
-  opts.on("-l", "--loop", "Loop forever (default)") do
-    options[:loop] = true
-  end
-
   opts.on("-w", "--wipe", "Wipe output each loop iteration") do
     options[:wipe] = true
   end
 
-  opts.on("-c", "--clear", "Clear the screen before starting (default for --loop)") do
-    options[:clear] = true
-  end
 end.parse!
 
-if options[:clear]
-  RubiksCli::Clear.screen
-end
+RubiksCli::Clear.screen if options[:clear]
 
 if options[:scramble] && options[:time]
-  RubiksCli::Solve.solve
+  RubiksCli::Solve.solve(options[:inspection])
 elsif options[:scramble]
   puts RubiksCli::Scrambler.get_scramble
 elsif options[:time]
+  RubiksCli::Timer.inspection if options[:inspection]
   RubiksCli::Timer.time
 else
   RubiksCli::Clear.screen
-  RubiksCli::Solve.loop(options[:wipe])
+  RubiksCli::Solve.loop(options[:wipe], options[:inspection])
 end
