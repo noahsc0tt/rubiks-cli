@@ -12,7 +12,7 @@ module RubiksCli
     end
 
     DEFAULT_ACTIONS = [
-      build_action('c', RubiksCli::Clear.screen, 'clear the screen'),
+      build_action('c', RubiksCli::Clear.method(:screen), 'clear the screen'),
       build_action('q', lambda { raise SystemExit }, 'quit'),
     ]
   end

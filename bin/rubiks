@@ -42,7 +42,7 @@ end.parse!
 RubiksCli::Clear.screen if options[:clear]
 
 if options[:scramble] && options[:time]
-  RubiksCli::Solve.solve(options[:inspection])
+  RubiksCli::Solve.once(options[:inspection])
 elsif options[:scramble]
   puts RubiksCli::Scrambler.get_scramble
 elsif options[:time]

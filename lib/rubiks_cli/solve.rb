@@ -1,4 +1,6 @@
 require_relative 'clear'
+require_relative 'loop/builder'
+require_relative 'loop/action'
 require_relative 'timer'
 require_relative 'scrambler' 
 
@@ -6,7 +8,7 @@ HELP = "Press Enter to start timing\nPress any key to stop timing\nType 'n' for 
 
 module RubiksCli
   module Solve
-    def self.solve(inspection)
+    def self.once(inspection)
         puts Scrambler.get_scramble
         gets
         Clear.line_above
@@ -14,33 +16,18 @@ module RubiksCli
     end
 
     def self.loop(clear_screen, inspection)
-      puts HELP
-      Kernel.loop do
-        begin
-          input = gets.chomp
-          clear_screen ? Clear.screen : Clear.line_above
-          process_input(input, inspection)
-        rescue SystemExit
-          exit
-        end
-      end
-    end
-
-    private
-    def self.process_input(cmd, inspection)
-      case cmd.downcase
-      when 'n'
-        puts Scrambler.get_scramble
-      when 'c'
-        Clear.screen
-      when 'h', '?'
-        puts HELP
-      when 'q'
-        raise SystemExit
-      else
+      on_enter = lambda {
         Timer.start(inspection)
         puts "\n#{Scrambler.get_scramble}"
-      end
+      }
+
+      Loop.build(
+        Loop.build_action('', on_enter, "start solve"),
+        [
+          Loop.build_action('n', lambda { puts Scrambler.get_scramble }, "generate a new scramble")
+        ]
+      ).start
+
     end
   end
 end
