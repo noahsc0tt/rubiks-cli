@@ -1,5 +1,6 @@
 module RubiksCli
   module Loop
+    private
     def self.build_help_message(actions)
       actions.map { |action| action.help }.join("\n")
     end

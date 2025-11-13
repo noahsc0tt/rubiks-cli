@@ -9,6 +9,7 @@ module RubiksCli
       build_action('q', lambda { raise SystemExit }, 'quit'),
     ]
 
+    private
     def self.build_action(command, function, description)
         help = "Press '#{command}' to #{description}"
         Action.send(:new, command, function, help)

@@ -13,6 +13,12 @@ module RubiksCli
         actions.each { |action| @actions[action.command] = action.function }
       end
 
+      def start
+        @actions['h'].call
+        loop do
+          @actions[gets.chomp.downcase].call
+        end
+      end
     end
   end
 end
