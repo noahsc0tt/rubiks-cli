@@ -1,13 +1,10 @@
 module RubiksCli
   module Loop
-    class Action
-      attr_reader :command, :function, :help
+    Action = Data.define(:command, :function, :help)
 
-      def initialize(command, function, description)
-        @command = command
-        @function = function
-        @help = "Press '#{command}' to #{description}\n"
-      end
+    def build_action(command, function, description)
+        help = "Press '#{command}' to #{description}"
+        return Action.new(command, function, help)
     end
   end
 end
