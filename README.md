@@ -1,6 +1,6 @@
 # Rubiks CLI
 
-A command-line Rubik's Cube timer.
+A command-line Rubik's Cube timer
 
 ## Installation
 
@@ -17,6 +17,6 @@ rubiks [options]
     -l, --loop                       Loop forever
     -s, --scramble                   Generate scramble
     -t, --time                       Start timer
-
-Defaults: --scramble, --time
+    -h, --help                       Show this help message
 ```
+Defaults: `--scramble, --time`
