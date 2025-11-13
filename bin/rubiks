@@ -2,14 +2,8 @@
 require 'optparse'
 require 'rubiks_cli'
 
-options = {
-  clear: false,
-  inspection: false,
-  loop: true,
-  scramble: false,
-  time: false,
-  wipe: false,
-}
+options = {}
+
 OptionParser.new do |opts|
   opts.banner = "Usage: rubiks [options]"
 
@@ -21,7 +15,7 @@ OptionParser.new do |opts|
     options[:inspection] = true
   end
 
-  opts.on("-l", "--loop", "Loop forever") do
+  opts.on("-l", "--loop", "RubiksCli::Loop forever") do
     options[:loop] = true
   end
 
@@ -39,15 +33,61 @@ OptionParser.new do |opts|
 
 end.parse!
 
+if options.values.none?
+  options[:scramble] = true
+  options[:time] = true
+  options[:loop] = true
+end
+
 RubiksCli::Clear.screen if options[:clear]
 
-if options[:scramble] && options[:time]
-  RubiksCli::Solve.once(options[:inspection])
-elsif options[:scramble]
-  puts RubiksCli::Scrambler.get_scramble
-elsif options[:time]
+output_scramble = lambda { puts RubiksCli::Scrambler.get_scramble }
+start_timer = lambda { RubiksCli::Timer.start(options[:inspection]) }
+start_timer_then_output_scramble = lambda {
   RubiksCli::Timer.start(options[:inspection])
-else
+  puts "\n#{RubiksCli::Scrambler.get_scramble}"
+}
+
+if options[:loop]
   RubiksCli::Clear.screen
-  RubiksCli::Solve.loop(options[:wipe], options[:inspection])
+
+  if options[:time] && options[:scramble]
+    RubiksCli::Loop.build(
+      RubiksCli::Loop.create_action('', start_timer_then_output_scramble, "start solve"),
+      [ RubiksCli::Loop.create_action('n', output_scramble, "generate new scramble"), ]
+    ).start
+
+  elsif options[:scramble]
+    RubiksCli::Loop.build(
+      RubiksCli::Loop.create_action('', output_scramble, "generate a scramble"),
+      [ RubiksCli::Loop.create_action('t', start_timer_then_output_scramble, "start timer"), ]
+    ).start
+
+  elsif options[:time]
+    RubiksCli::Loop.build(
+      RubiksCli::Loop.create_action('', start_timer, "start timer"),
+      [ RubiksCli::Loop.create_action('n', output_scramble, "generate a scramble"), ]
+    ).start
+
+  else
+
+  end
+else
+  if options[:time] && options[:scramble]
+    output_scramble.call
+    gets
+    RubiksCli::Clear.line_above
+    start_timer.call
+
+  elsif options[:scramble]
+    output_scramble.call
+
+  elsif options[:time]
+    start_timer.call
+
+  else
+    puts message
+
+  end
+
 end

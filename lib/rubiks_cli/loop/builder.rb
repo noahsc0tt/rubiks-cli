@@ -9,7 +9,7 @@ module RubiksCli
     end
 
     def self.build(on_enter, actions)
-      help_action = build_action('h', -> { puts build_help_message(actions) }, "show this message")
+      help_action = create_action('h', -> { puts build_help_message(actions) }, "show this message")
       Loop::Engine.send(:new, on_enter, actions += DEFAULT_ACTIONS << help_action)
     end
   end
