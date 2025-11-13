@@ -1,10 +1,12 @@
 module RubiksCli
   module Loop
-    Action = Data.define(:command, :function, :help)
+    class Action < Data.define(:command, :function, :help)
+      private_class_method :new
+    end
 
-    def build_action(command, function, description)
+    def self.build_action(command, function, description)
         help = "Press '#{command}' to #{description}"
-        return Action.new(command, function, help)
+        return Action.send(:new, command, function, help)
     end
   end
 end
