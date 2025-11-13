@@ -15,7 +15,7 @@ OptionParser.new do |opts|
     options[:inspection] = true
   end
 
-  opts.on("-l", "--loop", "RubiksCli::Loop forever") do
+  opts.on("-l", "--loop", "Loop forever") do
     options[:loop] = true
   end
 
@@ -70,7 +70,7 @@ if options[:loop]
     ).start
 
   else
-
+    puts "Invalid options for loop mode: must specify --time and/or --scramble"
   end
 else
   if options[:time] && options[:scramble]
@@ -86,8 +86,7 @@ else
     start_timer.call
 
   else
-    puts message
-
+    puts "Invalid options"
   end
 
 end
