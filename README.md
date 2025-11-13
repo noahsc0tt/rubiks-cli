@@ -11,11 +11,13 @@ gem install rubiks-cli
 ## Usage
 
 ```bash
-rubiks
+rubiks [options]
+    -c, --clear                      Clear the screen before starting
+    -i, --inspection                 Include inspection time
+    -l, --loop                       Loop forever
+    -s, --scramble                   Generate scramble
+    -t, --time                       Start timer
 ```
-
-- Press Enter to start timing
-- Press any key to stop timing
-- Type 'n' for a new scramble  
-- Type 'q' to quit
-- Type 'h' or '?' for help (this message)
+Default flags:
+- --time
+- --scramble

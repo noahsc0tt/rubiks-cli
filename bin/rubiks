@@ -27,6 +27,9 @@ OptionParser.new do |opts|
     options[:time] = true
   end
 
+  # opts.on("-o", "--overwrite", "Overwrite loop output") do
+  #   options[:time] = true
+  # end
 end.parse!
 
 if options.values.none?
