@@ -1,5 +1,5 @@
 module RubiksCli
-  class Clear
+  module Clear
     def self.screen
       system("clear") || system("cls")
     end

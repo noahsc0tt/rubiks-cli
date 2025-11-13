@@ -2,7 +2,7 @@ require 'io/console'
 require_relative 'clear'
 
 module RubiksCli
-  class Timer
+  module Timer
     INSPECTION_TIME = 15
 
     def self.start(inspection)

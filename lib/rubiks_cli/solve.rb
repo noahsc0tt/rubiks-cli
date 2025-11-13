@@ -4,7 +4,7 @@ require_relative 'timer'
 require_relative 'scrambler' 
 
 module RubiksCli
-  class Solve
+  module Solve
     def self.solve(inspection)
         puts Scrambler.get_scramble
         gets
