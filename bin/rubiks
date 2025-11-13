@@ -46,21 +46,18 @@ start_timer_then_output_scramble = lambda {
 if options[:loop]
 
   if options[:time] && options[:scramble]
-    RubiksCli::Clear.screen
     RubiksCli::Loop.build(
       RubiksCli::Loop.create_action('', start_timer_then_output_scramble, "start solve"),
       [ RubiksCli::Loop.create_action('n', output_scramble, "generate new scramble"), ]
     ).start
 
   elsif options[:scramble]
-    RubiksCli::Clear.screen
     RubiksCli::Loop.build(
       RubiksCli::Loop.create_action('', output_scramble, "generate a scramble"),
       [ RubiksCli::Loop.create_action('t', start_timer_then_output_scramble, "start timer"), ]
     ).start
 
   elsif options[:time]
-    RubiksCli::Clear.screen
     RubiksCli::Loop.build(
       RubiksCli::Loop.create_action('', start_timer, "start timer"),
       [ RubiksCli::Loop.create_action('n', output_scramble, "generate a scramble"), ]
