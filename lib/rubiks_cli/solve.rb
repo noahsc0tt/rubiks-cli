@@ -1,7 +1,8 @@
 require_relative 'clear'
-require_relative 'help'
 require_relative 'timer'
 require_relative 'scrambler' 
+
+HELP = "Press Enter to start timing\nPress any key to stop timing\nType 'n' for a new scramble\nType 'c' to clear the screen\nType 'h' or '?' for this message\nType 'q' to quit"
 
 module RubiksCli
   module Solve
@@ -13,7 +14,7 @@ module RubiksCli
     end
 
     def self.loop(clear_screen, inspection)
-      Help.loop
+      puts HELP
       Kernel.loop do
         begin
           input = gets.chomp
@@ -33,7 +34,7 @@ module RubiksCli
       when 'c'
         Clear.screen
       when 'h', '?'
-        Help.loop
+        puts HELP
       when 'q'
         raise SystemExit
       else

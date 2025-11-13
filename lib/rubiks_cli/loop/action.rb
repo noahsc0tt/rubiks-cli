@@ -6,7 +6,8 @@ module RubiksCli
 
     def self.build_action(command, function, description)
         help = "Press '#{command}' to #{description}"
-        return Action.send(:new, command, function, help)
+        Action.send(:new, command, function, help)
     end
+
   end
 end
