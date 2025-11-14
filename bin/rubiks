@@ -30,7 +30,10 @@ OptionParser.new do |opts|
   # opts.on("-o", "--overwrite", "Overwrite loop output") do
   #   options[:time] = true
   # end
-
+  opts.on("-v", "--version", "Print version") do
+    puts "rubiks-cli #{RubiksCli::VERSION}"
+    exit
+  end
   opts.on("-h", "--help", "Show this help message") do
     puts opts
     puts "\nDefaults: --scramble, --time"
