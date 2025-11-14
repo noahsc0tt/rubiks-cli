@@ -3,7 +3,7 @@ require_relative 'clear'
 
 module RubiksCli
   module Timer
-    INSPECTION_TIME = 15
+    INSPECTION_TIME = 5
 
     def self.start(inspection)
       if inspection
@@ -34,12 +34,14 @@ module RubiksCli
           return if STDIN.wait_readable(1)
         end
 
-        print "\r+2"
+        Clear.current_line
+        print "+2"
         2.times do
           return if STDIN.wait_readable(1)
         end
         
-        print "\rDNF"
+        Clear.current_line
+        print "DNF"
       ensure
         STDIN.getch rescue nil
       end
