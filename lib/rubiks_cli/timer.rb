@@ -3,7 +3,7 @@ require_relative 'clear'
 
 module RubiksCli
   module Timer
-    INSPECTION_TIME = 5
+    INSPECTION_TIME = 15
 
     def self.start(inspection)
       if inspection
